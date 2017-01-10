@@ -1,0 +1,2 @@
+# Jam-Dinding-Basic4gl
+Jam Dinding ini dibuat dengan bahasa Open GL menggunakan App Basic4gl. Open GL sendiri adalah suatu graphic library yang sebagian bersifat open source, dipakai pada banyak platform (windows, linux) dan dapat digunakan pada berbagai jenis compiler seperti C++ atau Delphi. Open GL sendiri bukan merupakan bahasa pemrograman namun merupakan Application Programming Interface (API).
