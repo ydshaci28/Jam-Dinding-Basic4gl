@@ -1,0 +1,415 @@
+'variabel untuk posisi kamera 
+Dim pcamx# = 0
+Dim pcamy# = 0
+Dim pcamz# = 4   'semakin besar zoom out 100, semakin kecil zoom in <50
+
+'variabel untuk posisi  pandang 
+Dim prefx# = 0
+Dim prefy# = 0 
+Dim prefz# = 0
+
+'variabel perpindahan 
+Dim pindah# = 0.05  
+
+'variabel tekstur 
+Dim teksturjam
+Dim teksturkayu 
+
+Dim i#    
+Dim n# 
+Dim anglemenit#
+Dim anglejam#
+
+teksturkayu = loadmipmaptexture("gambar/kayu.jpg") 
+teksturjam = loadmipmaptexture("gambar/jam.jpg")     
+
+
+glEnable(GL_TEXTURE_2D) 
+
+while true
+glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+glLoadIdentity()
+
+gluLookAt(pcamx#, pcamy#, pcamz#, prefx#, prefy#, prefz#, 0, 1, 0)
+
+glBindTexture(GL_TEXTURE_2D, teksturjam) 
+
+glBegin (GL_QUADS) 'sisi depan    
+    'glColor3f(1.0, 0.0, 0.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(1.0, 1.0, 1.0) 'kanan atas
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,0)
+    glVertex3f(1.0, -1.0, 1.0) 'kanan bawah
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(-1.0, -1.0, 1.0) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-1.0, 1.0, 1.0) 'kiri atas 
+glEnd()
+
+glBindTexture(GL_TEXTURE_2D, teksturkayu) 
+
+glBegin (GL_QUADS) 'sisi belakang    
+    'glColor3f(1.0, 0.0, 0.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(1.0, 1.0, 0.5) 'kanan atas
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,0)
+    glVertex3f(1.0, -1.0, 0.5) 'kanan bawah
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(-1.0, -1.0, 0.5) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-1.0, 1.0, 0.5) 'kiri atas 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kiri    
+    'glColor3f(1.0, 0.0, 0.0) 
+    glTexCoord2f(0,1)
+    glVertex3f(-1.0, 1.0, 0.5)
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,1)
+    glVertex3f(-1.0, 1.0, 1.0)
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(1,0)
+    glVertex3f(-1.0, -1.0, 1.0) 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(-1.0, -1.0, 0.5) 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kanan    
+    'glColor3f(1.0, 0.0, 0.0) 
+    glTexCoord2f(0,1)
+    glVertex3f(1.0, 1.0, 0.5)
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,1)
+    glVertex3f(1.0, 1.0, 1.0)
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(1,0)
+    glVertex3f(1.0, -1.0, 1.0) 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(1.0, -1.0, 0.5) 
+glEnd() 
+
+glBegin (GL_QUADS) 'sisi atas    
+    'glColor3f(1.0, 0.0, 0.0)
+    glTexCoord2f(1,0)
+    glVertex3f(1.0, 1.0, 0.5)
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,1)
+    glVertex3f(1.0, 1.0, 1.0)
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-1.0, 1.0, 1.0) 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(-1.0, 1.0, 0.5) 
+glEnd() 
+
+glBegin (GL_QUADS) 'sisi bawah    
+    'glColor3f(1.0, 0.0, 0.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(1.0, -1.0, 0.5)
+    
+    'glColor3f(0.0, 1.0, 0.0)
+    glTexCoord2f(1,1)
+    glVertex3f(1.0, -1.0, 1.0)
+    
+    'glColor3f(0.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-1.0, -1.0, 1.0) 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,0)
+    glVertex3f(-1.0, -1.0, 0.5) 
+glEnd()
+
+'titik pusaat 
+glBindTexture(GL_TEXTURE_2D, teksturkayu)
+
+glBegin (GL_QUADS) 'sisi depan    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(0.05, 0.05, 1.025) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(0.05, -0.05, 1.025) 'kanan bawah
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(0,0)
+    glVertex3f(-0.05, -0.05, 1.025) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.05, 0.05, 1.025) 'kiri atas 
+glEnd() 
+
+ 'detikan jam  
+
+glRotatef(anglejam#, 0, 0, 1)
+
+glBegin (GL_QUADS) 'sisi depan    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.4, 1.02) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kanan bawah
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(0,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(0.025, 0.4, 1.02) 'kiri atas 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi belakang    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.4, 1.02) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kanan bawah
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.4, 1.02) 'kiri atas 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kanan    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.4, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)       
+    glTexCoord2f(0,1)
+    glVertex3f(0.025, 0.4, 1.02) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.0, 1.01) 'kanan bawah
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kiri    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(-0.025, 0.4, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.4, 1.02) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,0)
+    glVertex3f(-0.025, 0.0, 1.01) 'kanan bawah
+glEnd()   
+
+glBegin (GL_QUADS) 'sisi atas    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.4, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.4, 1.01) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.4, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.4, 1.02) 'kanan bawah
+glEnd()
+
+glBegin (GL_QUADS) 'sisi bawah    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.0, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.0, 1.01) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kanan bawah
+glEnd()   
+
+glRotatef(anglemenit#, 0, 0, 1)
+'detikan menit     
+
+glBegin (GL_QUADS) 'sisi depan    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.75, 1.02) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kanan bawah
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.75, 1.02) 'kiri atas 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi belakang    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.75, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.01) 'kanan bawah
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.01) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.75, 1.01) 'kiri atas 
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kanan    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.75, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)       
+    glTexCoord2f(0,1)
+    glVertex3f(0.025, 0.75, 1.02) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.0, 1.01) 'kanan bawah
+glEnd()
+
+glBegin (GL_QUADS) 'sisi kiri    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(-0.025, 0.75, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.75, 1.02) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,0)
+    glVertex3f(-0.025, 0.0, 1.01) 'kanan bawah
+glEnd()   
+
+glBegin (GL_QUADS) 'sisi atas    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.75, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.75, 1.01) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0)  
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.75, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.75, 1.02) 'kanan bawah
+glEnd()
+
+glBegin (GL_QUADS) 'sisi bawah    
+    'glColor3f(1.0, 0.0, 1.0)
+    glTexCoord2f(1,1)
+    glVertex3f(0.025, 0.0, 1.01) 'kanan atas
+    
+    'glColor3f(1.0, 0.0, 1.0)   
+    glTexCoord2f(0,1)
+    glVertex3f(-0.025, 0.0, 1.01) 'kiri atas
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(0,0)
+    glVertex3f(-0.025, 0.0, 1.02) 'kiri bawah 
+    
+    'glColor3f(1.0, 0.0, 1.0) 
+    glTexCoord2f(1,0)
+    glVertex3f(0.025, 0.0, 1.02) 'kanan bawah
+glEnd()
+
+
+swapBuffers() 
+anglemenit#=anglemenit#-0.01 
+anglejam#=anglejam#-0.00085   'karena tiap menit ada 5 detik maka 5 : 60 = 0.083333 atau 0.085
+
+if scankeydown(VK_RIGHT) then    ' gerak ke kanan
+pcamx# = pcamx# + pindah#
+elseif scankeydown(VK_LEFT) then  ' gerak ke kiri 
+pcamx# = pcamx# - pindah#
+elseif scankeydown(VK_UP) then  ' gerak ke atas 
+pcamy# = pcamy# + pindah#
+elseif scankeydown(VK_DOWN) then  ' gerak ke bawah
+pcamy# = pcamy# - pindah# 
+endif      
+
+wend          
+
+
+
+                        
+
+
+
+
+
